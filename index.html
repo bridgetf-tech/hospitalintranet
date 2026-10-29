@@ -3,257 +3,276 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <meta name="description"
-        content="Towson Hospital Employee Intranet - HealthDesk AI Academic Prototype">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Towson Hospital fictional employee intranet and HealthDesk AI academic demonstration">
   <title>Towson Hospital | Employee Intranet</title>
+
+  <!-- Botpress Webchat integration -->
+  <script src="https://cdn.botpress.cloud/webchat/v5.0/inject.js"></script>
+  <script src="https://files.bpcontent.cloud/2026/10/29/08/20261029080824-YXO29M2J.js" defer></script>
 
   <style>
     :root {
-      --black: #141414;
-      --black-soft: #242424;
       --gold: #FFBB00;
-      --old-gold: #CC9900;
-      --gold-light: #FFF2C7;
+      --black: #151515;
       --white: #FFFFFF;
-      --off-white: #FAF9F6;
-      --gray: #626262;
-      --line: #E8E4DC;
-      --shadow: 0 12px 32px rgba(0,0,0,0.07);
+      --cream: #FAF9F5;
+      --muted: #626262;
+      --line: #E8E7E1;
+      --pale: #FFF4D0;
+      --shadow: 0 9px 26px rgba(0,0,0,.055);
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
+      background: var(--cream);
       font-family: Arial, Helvetica, sans-serif;
       color: var(--black);
-      background: var(--off-white);
       line-height: 1.5;
     }
 
-    a {
-      color: inherit;
-    }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
 
-    button {
-      font: inherit;
-      cursor: pointer;
-    }
-
-    .container {
-      width: min(1150px, calc(100% - 40px));
-      margin: 0 auto;
-    }
-
-    /* Academic prototype notice */
-
-    .prototype-bar {
-      background: var(--gold-light);
-      color: #4D3A0E;
-      padding: 8px 16px;
+    .notice {
+      background: var(--gold);
       text-align: center;
       font-size: 12px;
       font-weight: 700;
-      letter-spacing: 0.02em;
+      padding: 8px 16px;
     }
 
     /* Header */
 
-    header {
+    .topbar {
       background: var(--white);
       border-bottom: 1px solid var(--line);
     }
 
-    .header-inner {
+    .topbar-inner {
+      max-width: 1440px;
+      margin: auto;
+      padding: 17px 28px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      gap: 24px;
-      padding: 19px 0;
+      justify-content: space-between;
+      gap: 16px;
     }
 
     .brand {
-      display: flex;
-      gap: 13px;
-      align-items: center;
-      text-decoration: none;
-    }
-
-    .brand-mark {
-      width: 49px;
-      height: 49px;
-      display: grid;
-      place-items: center;
-      background: var(--black);
-      color: var(--gold);
-      border-radius: 10px;
-      font-size: 31px;
-      font-weight: 900;
-    }
-
-    .brand strong {
-      display: block;
-      font-size: 21px;
-      letter-spacing: -0.04em;
-      line-height: 1.15;
-    }
-
-    .brand small {
-      display: block;
-      font-size: 11px;
-      letter-spacing: 0.13em;
-      color: var(--gray);
-      text-transform: uppercase;
-      margin-top: 4px;
-    }
-
-    .header-tools {
       display: flex;
       align-items: center;
       gap: 12px;
     }
 
-    .search {
+    .brand-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      background: var(--black);
+      color: var(--gold);
+      font-size: 34px;
+      font-weight: 800;
+      border-radius: 10px;
+    }
+
+    .brand-title {
+      display: block;
+      font-size: 21px;
+      font-weight: 900;
+      letter-spacing: -.7px;
+      line-height: 1.1;
+    }
+
+    .brand-subtitle {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin-top: 5px;
+    }
+
+    .top-right {
       display: flex;
+      gap: 14px;
       align-items: center;
+    }
+
+    .search-form {
+      display: flex;
       border: 1px solid var(--line);
-      background: var(--off-white);
-      border-radius: 8px;
+      border-radius: 9px;
       overflow: hidden;
+      background: #FAFAFA;
     }
 
-    .search input {
+    .search-form input {
+      width: 210px;
+      padding: 10px 13px;
       border: 0;
       background: transparent;
-      padding: 11px 13px;
-      width: 220px;
-      outline-offset: -2px;
+      outline-offset: -3px;
     }
 
-    .search button {
-      background: transparent;
+    .search-form button {
       border: 0;
+      background: transparent;
       padding: 10px 14px;
     }
 
-    .employee-pill {
-      background: var(--black);
-      color: var(--white);
+    .employee-badge {
+      padding: 10px 14px;
+      background: #F2F2F2;
       border-radius: 8px;
-      padding: 11px 15px;
-      font-size: 13px;
-      white-space: nowrap;
-    }
-
-    /* Navigation */
-
-    nav {
-      background: var(--black);
-      color: var(--white);
-    }
-
-    .nav-inner {
-      display: flex;
-      flex-wrap: wrap;
-    }
-
-    nav a {
-      padding: 15px 19px;
-      text-decoration: none;
       font-size: 13px;
       font-weight: 700;
-      border-bottom: 3px solid transparent;
     }
 
-    nav a:hover,
-    nav a:focus-visible,
-    nav a.active {
-      color: var(--gold-light);
-      border-color: var(--gold);
+    /* Dashboard layout and sidebar */
+
+    .layout {
+      max-width: 1440px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 235px minmax(0,1fr);
+      min-height: calc(100vh - 130px);
     }
 
-    /* Welcome banner */
+    .sidebar {
+      background: var(--white);
+      border-right: 1px solid var(--line);
+      padding: 28px 16px;
+    }
+
+    .side-label {
+      color: #777;
+      font-size: 11px;
+      letter-spacing: 1.6px;
+      font-weight: 800;
+      padding: 0 14px;
+      margin-bottom: 12px;
+    }
+
+    .side-nav {
+      display: grid;
+      gap: 5px;
+    }
+
+    .side-nav a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-radius: 9px;
+      padding: 12px 14px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .side-nav a:hover,
+    .side-nav a:focus-visible {
+      background: var(--pale);
+    }
+
+    .side-nav a.active {
+      background: var(--black);
+      color: var(--white);
+      border-left: 4px solid var(--gold);
+    }
+
+    .side-nav .emoji {
+      width: 22px;
+      text-align: center;
+    }
+
+    .sidebar-tip {
+      margin: 34px 8px 0;
+      background: var(--pale);
+      border-radius: 12px;
+      padding: 17px;
+      font-size: 13px;
+    }
+
+    .sidebar-tip strong {
+      display: block;
+      margin-bottom: 7px;
+    }
+
+    .sidebar-tip p {
+      margin: 0;
+      color: #584C2C;
+    }
+
+    /* Main dashboard */
+
+    .main {
+      padding: 30px 32px 55px;
+      min-width: 0;
+    }
 
     .hero {
       background: var(--black);
       color: var(--white);
-      position: relative;
+      border-radius: 16px;
+      padding: 36px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
       overflow: hidden;
+      position: relative;
     }
 
-    .hero::before {
-      content: "";
-      position: absolute;
-      right: -110px;
-      top: -180px;
-      width: 500px;
-      height: 500px;
-      border: 85px solid rgba(255,187,0,0.13);
-      border-radius: 50%;
-    }
-
-    .hero::after {
-      content: "+";
-      position: absolute;
-      right: 12%;
-      top: 5%;
-      color: rgba(255,187,0,0.20);
-      font-size: 250px;
-      font-weight: 900;
-      line-height: 1;
-    }
-
-    .hero-content {
+    .hero-copy {
       position: relative;
       z-index: 1;
-      padding: 72px 0 77px;
-      max-width: 680px;
+      max-width: 620px;
     }
 
     .eyebrow {
       color: var(--gold);
       font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.18em;
+      font-weight: 900;
+      letter-spacing: 2px;
       text-transform: uppercase;
     }
 
-    h1 {
-      font-size: clamp(36px, 5vw, 56px);
-      line-height: 1.1;
-      letter-spacing: -0.045em;
-      margin: 14px 0 19px;
+    .hero h1 {
+      font-size: clamp(29px,3.6vw,43px);
+      line-height: 1.13;
+      letter-spacing: -1.5px;
+      margin: 12px 0;
     }
 
     .hero p {
-      color: #E1E1E1;
-      max-width: 560px;
-      font-size: 16px;
+      color: #DEDEDE;
+      font-size: 15px;
+      margin: 0 0 21px;
     }
 
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 27px;
+    .hero-symbol {
+      font-size: 160px;
+      font-weight: 900;
+      color: var(--gold);
+      opacity: .8;
+      line-height: 1;
+      margin-right: 35px;
     }
 
     .btn {
-      border-radius: 8px;
-      padding: 12px 19px;
-      font-weight: 800;
-      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 17px;
+      border-radius: 9px;
       border: 1px solid transparent;
-      display: inline-block;
+      font-weight: 800;
+      font-size: 14px;
     }
 
     .btn-gold {
@@ -262,322 +281,311 @@
     }
 
     .btn-gold:hover {
-      background: var(--old-gold);
+      background: #E7AA00;
     }
 
     .btn-outline {
-      color: var(--white);
-      border-color: #777;
+      background: transparent;
+      color: white;
+      border-color: #858585;
     }
 
     .btn-outline:hover {
-      background: #333;
+      background: #303030;
     }
 
-    /* Main content */
-
-    main {
-      padding: 39px 0 65px;
+    .hero-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
-    .section-heading {
+    /* Quick access */
+
+    .section {
+      margin-top: 29px;
+    }
+
+    .section-head {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      gap: 15px;
-      margin-bottom: 17px;
+      gap: 10px;
+      margin-bottom: 15px;
     }
 
-    h2 {
-      font-size: 24px;
+    .section-head h2 {
+      font-size: 22px;
+      letter-spacing: -.6px;
       margin: 0;
-      letter-spacing: -0.03em;
     }
 
-    .section-heading p {
-      margin: 0;
-      color: var(--gray);
+    .section-head span {
       font-size: 13px;
+      color: var(--muted);
     }
 
-    /* Quick link cards */
-
-    .cards {
+    .quick-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(4,minmax(0,1fr));
+      gap: 14px;
     }
 
-    .card {
+    .quick-card {
+      display: block;
       background: var(--white);
+      padding: 19px;
       border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 23px;
-      text-decoration: none;
+      border-radius: 13px;
       box-shadow: var(--shadow);
-      transition: transform 0.15s, border-color 0.15s;
+      transition: transform .15s,border-color .15s;
     }
 
-    .card:hover,
-    .card:focus-visible {
-      transform: translateY(-3px);
+    .quick-card:hover,
+    .quick-card:focus-visible {
+      transform: translateY(-2px);
       border-color: var(--gold);
     }
 
-    .card-icon {
-      width: 45px;
-      height: 45px;
-      background: var(--gold-light);
+    .quick-icon {
       display: grid;
       place-items: center;
-      border-radius: 9px;
-      font-size: 24px;
-      margin-bottom: 16px;
+      width: 44px;
+      height: 44px;
+      background: var(--pale);
+      border-radius: 11px;
+      font-size: 23px;
+      margin-bottom: 15px;
     }
 
-    .card h3 {
-      margin: 0 0 8px;
-      font-size: 16px;
+    .quick-card strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 5px;
     }
 
-    .card p {
+    .quick-card p {
+      font-size: 12px;
+      color: var(--muted);
       margin: 0;
-      color: var(--gray);
-      font-size: 13px;
     }
 
-    /* Announcements and support */
+    /* Announcements and IT support */
 
-    .split {
+    .dashboard-grid {
       display: grid;
-      grid-template-columns: 1.35fr 1fr;
-      gap: 20px;
-      margin-top: 36px;
+      grid-template-columns: minmax(0,1.2fr) minmax(290px,.85fr);
+      gap: 18px;
+      margin-top: 27px;
     }
 
     .panel {
-      background: var(--white);
       border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 25px;
+      border-radius: 14px;
+      background: var(--white);
+      padding: 24px;
       box-shadow: var(--shadow);
     }
 
     .panel h2 {
       font-size: 21px;
-      margin-bottom: 17px;
+      margin: 0 0 16px;
+      letter-spacing: -.5px;
     }
 
-    .announcement {
-      padding: 15px 0;
+    .news-item {
+      padding: 14px 0;
       border-top: 1px solid var(--line);
     }
 
-    .announcement:first-of-type {
+    .news-item:first-of-type {
       border-top: 0;
       padding-top: 0;
     }
 
-    .announcement strong {
+    .news-item strong {
       display: block;
       font-size: 14px;
+      margin: 6px 0;
     }
 
-    .announcement small {
-      color: var(--gray);
+    .news-item p {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
     }
 
     .tag {
       display: inline-block;
-      background: var(--gold-light);
-      color: #73551B;
-      padding: 3px 8px;
-      font-size: 11px;
+      background: var(--pale);
+      color: #654A00;
       font-weight: 800;
+      font-size: 10px;
+      letter-spacing: .5px;
+      padding: 4px 8px;
       border-radius: 5px;
-      margin-bottom: 8px;
     }
 
     .support-panel {
       background: var(--black);
       color: var(--white);
+      border-color: var(--black);
     }
 
     .support-panel p {
-      color: #DEDEDE;
       font-size: 14px;
+      color: #E0E0E0;
     }
 
     .support-panel ul {
       padding-left: 20px;
-      color: #E8E8E8;
-      font-size: 14px;
+      font-size: 13px;
+      color: #E0E0E0;
     }
 
     .support-panel li {
-      margin: 9px 0;
+      margin: 8px 0;
     }
 
     .support-panel .btn {
-      margin-top: 9px;
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    .support-panel small {
+      display: block;
+      color: #CCC;
+      margin-top: 13px;
+      font-size: 11px;
     }
 
     /* Employee resources */
 
     .resources {
-      margin-top: 36px;
-    }
-
-    .resource-row {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap: 14px;
     }
 
     .resource {
-      padding: 20px;
-      background: var(--white);
       border: 1px solid var(--line);
-      border-radius: 10px;
+      border-radius: 11px;
+      background: var(--white);
+      padding: 18px;
     }
 
     .resource strong {
       display: block;
-      margin-bottom: 6px;
+      font-size: 14px;
     }
 
-    .resource span {
-      color: var(--gray);
-      font-size: 13px;
+    .resource p {
+      font-size: 12px;
+      color: var(--muted);
+      margin: 7px 0 0;
     }
 
     /* Footer */
 
-    footer {
-      background: var(--black);
-      color: #E8E8E8;
-      padding: 27px 0;
+    .footer {
+      border-top: 1px solid var(--line);
       font-size: 12px;
-    }
-
-    .footer-inner {
+      color: var(--muted);
+      margin-top: 33px;
+      padding-top: 20px;
       display: flex;
       justify-content: space-between;
-      gap: 20px;
+      gap: 12px;
       flex-wrap: wrap;
     }
 
-    .footer-inner strong {
-      color: var(--gold);
-    }
+    /* Responsive design */
 
-    /* Chatbot preview panel
-       No floating launcher is displayed. */
-
-    .chat-panel {
-      position: fixed;
-      right: 24px;
-      bottom: 24px;
-      z-index: 11;
-      width: min(355px, calc(100vw - 32px));
-      background: white;
-      border: 1px solid var(--line);
-      border-radius: 13px;
-      box-shadow: 0 16px 45px rgba(0,0,0,0.23);
-      overflow: hidden;
-    }
-
-    .chat-panel[hidden] {
-      display: none;
-    }
-
-    .chat-title {
-      background: var(--black);
-      color: white;
-      padding: 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .chat-title button {
-      background: transparent;
-      border: 0;
-      color: white;
-      font-size: 24px;
-    }
-
-    .chat-body {
-      padding: 20px;
-      font-size: 14px;
-    }
-
-    .chat-body p {
-      margin-top: 0;
-    }
-
-    .chat-note {
-      padding: 12px;
-      background: var(--gold-light);
-      border-radius: 8px;
-      font-size: 12px;
-    }
-
-    .chat-choices {
-      display: grid;
-      gap: 8px;
-      margin-top: 14px;
-    }
-
-    .chat-choices button {
-      border: 1px solid var(--gold);
-      background: white;
-      padding: 10px;
-      border-radius: 7px;
-      text-align: left;
-    }
-
-    .chat-choices button:hover {
-      background: var(--gold-light);
-    }
-
-    /* Responsive layout */
-
-    @media (max-width: 850px) {
-      .cards {
-        grid-template-columns: repeat(2, 1fr);
+    @media (max-width:1150px) {
+      .quick-grid {
+        grid-template-columns: repeat(2,minmax(0,1fr));
       }
 
-      .split {
+      .hero-symbol {
+        font-size: 110px;
+        margin-right: 0;
+      }
+
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width:760px) {
+      .layout {
         grid-template-columns: 1fr;
       }
 
-      .header-tools {
+      .sidebar {
+        padding: 12px 16px;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .side-label,
+      .sidebar-tip {
         display: none;
       }
+
+      .side-nav {
+        display: flex;
+        overflow-x: auto;
+      }
+
+      .side-nav a {
+        white-space: nowrap;
+        font-size: 12px;
+      }
+
+      .main {
+        padding: 20px 16px 40px;
+      }
+
+      .topbar-inner {
+        padding: 13px 16px;
+      }
+
+      .top-right {
+        display: none;
+      }
+
+      .hero {
+        padding: 28px 24px;
+      }
+
+      .hero-symbol {
+        display: none;
+      }
+
+      .resources {
+        grid-template-columns: 1fr;
+      }
     }
 
-    @media (max-width: 600px) {
-      .cards,
-      .resource-row {
+    @media (max-width:460px) {
+      .quick-grid {
         grid-template-columns: 1fr;
       }
 
-      .section-heading {
-        display: block;
+      .brand-title {
+        font-size: 17px;
       }
 
-      .hero-content {
-        padding: 55px 0;
+      .brand-subtitle {
+        font-size: 9px;
       }
 
-      nav a {
-        padding: 12px;
+      .hero-actions {
+        display: grid;
       }
 
-      .chat-panel {
-        right: 16px;
-        bottom: 16px;
+      .hero h1 {
+        font-size: 30px;
       }
     }
   </style>
@@ -585,519 +593,414 @@
 
 <body>
 
-  <!-- Academic prototype disclaimer -->
+  <!-- Fictional hospital disclaimer -->
 
-  <div class="prototype-bar">
+  <div class="notice">
     ACADEMIC DEMONSTRATION ONLY —
-    Towson Hospital and its employee portal are fictional.
+    Towson Hospital and its systems are fictional.
   </div>
 
   <!-- Header -->
 
-  <header>
-    <div class="container header-inner">
+  <header class="topbar">
+    <div class="topbar-inner">
 
-      <a class="brand" href="#home" aria-label="Towson Hospital home">
+      <a class="brand" href="#home"
+         aria-label="Towson Hospital home">
 
-        <span class="brand-mark" aria-hidden="true">+</span>
+        <span class="brand-icon" aria-hidden="true">+</span>
 
         <span>
-          <strong>TOWSON HOSPITAL</strong>
-          <small>Employee Intranet</small>
+          <span class="brand-title">TOWSON HOSPITAL</span>
+          <span class="brand-subtitle">EMPLOYEE INTRANET</span>
         </span>
 
       </a>
 
-      <div class="header-tools">
+      <div class="top-right">
 
-        <form class="search" id="siteSearch" role="search">
+        <form id="siteSearch" class="search-form" role="search">
           <input
-            aria-label="Search intranet"
             id="searchInput"
+            type="search"
             placeholder="Search intranet..."
+            aria-label="Search intranet"
           >
 
-          <button type="submit" aria-label="Search">⌕</button>
+          <button type="submit" aria-label="Search">
+            ⌕
+          </button>
         </form>
 
-        <span class="employee-pill">Employee Portal</span>
+        <span class="employee-badge">Employee Portal</span>
 
       </div>
-
     </div>
   </header>
 
-  <!-- Navigation -->
+  <!-- Dashboard layout -->
 
-  <nav aria-label="Main navigation">
-    <div class="container nav-inner">
+  <div class="layout">
 
-      <a class="active" href="#home">Home</a>
-      <a href="#quick-links">Quick Links</a>
-      <a href="#announcements">Announcements</a>
-      <a href="#it-support">IT Support</a>
-      <a href="#resources">Resources</a>
+    <!-- Left navigation sidebar -->
 
-    </div>
-  </nav>
+    <aside class="sidebar" aria-label="Intranet sidebar">
 
-  <!-- Welcome section -->
+      <div class="side-label">NAVIGATION</div>
 
-  <section class="hero" id="home">
+      <nav class="side-nav">
 
-    <div class="container hero-content">
+        <a class="active" href="#home">
+          <span class="emoji">⌂</span>
+          Dashboard
+        </a>
 
-      <div class="eyebrow">
-        Welcome to your employee hub
+        <a href="#quick-links">
+          <span class="emoji">▦</span>
+          Applications
+        </a>
+
+        <a href="#announcements">
+          <span class="emoji">📣</span>
+          Announcements
+        </a>
+
+        <a href="#it-support">
+          <span class="emoji">🎧</span>
+          IT Support
+        </a>
+
+        <a href="#resources">
+          <span class="emoji">📚</span>
+          Resources
+        </a>
+
+      </nav>
+
+      <div class="sidebar-tip">
+        <strong>🔒 Security reminder</strong>
+
+        <p>
+          Never enter passwords, MFA codes,
+          or patient information into the chatbot.
+        </p>
       </div>
 
-      <h1>
-        Everything you need.<br>
-        All in one place.
-      </h1>
+    </aside>
 
-      <p>
-        Find employee resources, access essential applications,
-        and get quick IT support through HealthDesk AI.
-      </p>
+    <!-- Main content -->
 
-      <div class="hero-actions">
+    <main class="main" id="home">
 
-        <a class="btn btn-gold" href="#quick-links">
-          Explore Quick Links
-        </a>
+      <!-- Welcome banner -->
 
-        <a class="btn btn-outline" href="#it-support">
-          Get IT Support
-        </a>
+      <section class="hero" aria-labelledby="welcome-title">
 
-      </div>
+        <div class="hero-copy">
 
-    </div>
-  </section>
+          <div class="eyebrow">Employee dashboard</div>
 
-  <!-- Main content -->
-
-  <main class="container">
-
-    <!-- Quick Links -->
-
-    <section id="quick-links" aria-labelledby="quickTitle">
-
-      <div class="section-heading">
-        <h2 id="quickTitle">Quick Links</h2>
-        <p>Common employee tools and services</p>
-      </div>
-
-      <div class="cards">
-
-        <a class="card" href="#it-support">
-
-          <div class="card-icon">🩺</div>
-
-          <h3>TowsonChart EHR</h3>
+          <h1 id="welcome-title">
+            Welcome to Towson Hospital
+          </h1>
 
           <p>
-            Clinical application support and guidance
-            (demo only).
+            Access essential hospital resources,
+            stay informed, and get guided IT assistance
+            — all from one place.
           </p>
 
-        </a>
+          <div class="hero-actions">
 
-        <a class="card" href="#it-support">
+            <button
+              class="btn btn-gold"
+              type="button"
+              data-open-botpress
+            >
+              ✦ Open HealthDesk AI
+            </button>
 
-          <div class="card-icon">🔐</div>
+            <a class="btn btn-outline" href="#quick-links">
+              Explore Applications
+            </a>
 
-          <h3>Employee Self-Service</h3>
-
-          <p>
-            Account unlock and password reset guidance.
-          </p>
-
-        </a>
-
-        <a class="card" href="#it-support">
-
-          <div class="card-icon">🎧</div>
-
-          <h3>IT Help Desk</h3>
-
-          <p>
-            Troubleshooting and support resources.
-          </p>
-
-        </a>
-
-        <a class="card" href="#resources">
-
-          <div class="card-icon">📋</div>
-
-          <h3>HR &amp; Employee Resources</h3>
-
-          <p>
-            Policies, training, and employee information.
-          </p>
-
-        </a>
-
-      </div>
-
-    </section>
-
-    <!-- News and IT Support -->
-
-    <div class="split">
-
-      <!-- Announcements -->
-
-      <section
-        class="panel"
-        id="announcements"
-        aria-labelledby="annTitle"
-      >
-
-        <h2 id="annTitle">News &amp; Announcements</h2>
-
-        <div class="announcement">
-
-          <span class="tag">IT UPDATE</span>
-
-          <strong>
-            HealthDesk AI prototype is available
-            for demonstration
-          </strong>
-
-          <small>
-            Explore sample IT troubleshooting conversations
-            on this fictional portal.
-          </small>
+          </div>
 
         </div>
 
-        <div class="announcement">
+        <div class="hero-symbol" aria-hidden="true">+</div>
 
-          <span class="tag">TRAINING</span>
+      </section>
 
-          <strong>
-            TowsonChart orientation resources
-          </strong>
+      <!-- Quick Access -->
 
-          <small>
-            Example announcement for hospital staff.
-            No real EHR is connected.
-          </small>
+      <section class="section" id="quick-links">
 
+        <div class="section-head">
+          <h2>Quick Access</h2>
+          <span>Frequently used employee services</span>
         </div>
 
-        <div class="announcement">
+        <div class="quick-grid">
 
-          <span class="tag">REMINDER</span>
+          <a class="quick-card" href="#it-support">
 
-          <strong>Keep your account secure</strong>
+            <span class="quick-icon">🩺</span>
 
-          <small>
-            Never share passwords, verification codes,
-            or patient information in chat.
-          </small>
+            <strong>TowsonChart EHR</strong>
+
+            <p>
+              Clinical system guidance and troubleshooting
+            </p>
+
+          </a>
+
+          <a class="quick-card" href="#it-support">
+
+            <span class="quick-icon">🔐</span>
+
+            <strong>Employee Self-Service</strong>
+
+            <p>
+              Password reset and account unlock guidance
+            </p>
+
+          </a>
+
+          <a class="quick-card" href="#it-support">
+
+            <span class="quick-icon">🎧</span>
+
+            <strong>IT Help Desk</strong>
+
+            <p>
+              Technical assistance and issue escalation
+            </p>
+
+          </a>
+
+          <a class="quick-card" href="#resources">
+
+            <span class="quick-icon">📋</span>
+
+            <strong>HR &amp; Resources</strong>
+
+            <p>
+              Staff policies, training, and information
+            </p>
+
+          </a>
 
         </div>
 
       </section>
 
-      <!-- IT Support -->
+      <!-- Announcements and IT support -->
 
-      <section
-        class="panel support-panel"
-        id="it-support"
-        aria-labelledby="supportTitle"
-      >
+      <div class="dashboard-grid">
 
-        <div class="eyebrow">
-          Technology support
+        <section class="panel" id="announcements">
+
+          <h2>Hospital Announcements</h2>
+
+          <div class="news-item">
+
+            <span class="tag">IT UPDATE</span>
+
+            <strong>
+              HealthDesk AI is available for demonstration
+            </strong>
+
+            <p>
+              Explore guided support for seven fictional
+              IT scenarios.
+            </p>
+
+          </div>
+
+          <div class="news-item">
+
+            <span class="tag">CLINICAL SYSTEMS</span>
+
+            <strong>
+              TowsonChart employee support resources
+            </strong>
+
+            <p>
+              Find guidance for sign-in, loading,
+              and authorization issues.
+            </p>
+
+          </div>
+
+          <div class="news-item">
+
+            <span class="tag">SECURITY</span>
+
+            <strong>
+              Protect employee and patient information
+            </strong>
+
+            <p>
+              Never share sensitive details in chat
+              or unapproved tools.
+            </p>
+
+          </div>
+
+        </section>
+
+        <!-- IT Support panel -->
+
+        <section class="panel support-panel" id="it-support">
+
+          <div class="eyebrow">Virtual IT support</div>
+
+          <h2>Need technical assistance?</h2>
+
+          <p>
+            HealthDesk AI guides employees through
+            common issues, including:
+          </p>
+
+          <ul>
+            <li>Password errors, resets, and account lockouts</li>
+            <li>TowsonChart loading problems</li>
+            <li>Microsoft Authenticator and MFA</li>
+            <li>VPN, Citrix, and reference website issues</li>
+            <li>System access and prescription-signing authorization</li>
+          </ul>
+
+          <button
+            class="btn btn-gold"
+            type="button"
+            data-open-botpress
+          >
+            ✦ Open HealthDesk AI
+          </button>
+
+          <small>
+            Academic prototype only. No real tickets,
+            account changes, or EHR actions.
+          </small>
+
+        </section>
+
+      </div>
+
+      <!-- Employee Resources -->
+
+      <section class="section" id="resources">
+
+        <div class="section-head">
+          <h2>Employee Resources</h2>
+          <span>Sample intranet information</span>
         </div>
 
-        <h2 id="supportTitle">Need IT help?</h2>
+        <div class="resources">
 
-        <p>
-          HealthDesk AI can guide you through common issues,
-          including:
-        </p>
+          <div class="resource">
 
-        <ul>
-          <li>Password policy errors and account lockouts</li>
-          <li>TowsonChart loading issues</li>
-          <li>Microsoft Authenticator / MFA</li>
-          <li>VPN, Citrix, and browser problems</li>
-        </ul>
+            <strong>📘 Clinical resources</strong>
 
-        <button
-          class="btn btn-gold"
-          type="button"
-          id="openChat"
-          aria-expanded="false"
-          aria-controls="chatPanel"
-        >
-          Open HealthDesk AI
-        </button>
+            <p>
+              Fictional training and clinical
+              reference materials.
+            </p>
 
-        <p>
-          <small>
-            This prototype does not create real IT tickets
-            or change accounts.
-          </small>
-        </p>
+          </div>
+
+          <div class="resource">
+
+            <strong>🛡️ Privacy &amp; security</strong>
+
+            <p>
+              Approved access procedures and
+              safe troubleshooting reminders.
+            </p>
+
+          </div>
+
+          <div class="resource">
+
+            <strong>📅 Staff updates</strong>
+
+            <p>
+              Employee notices and general
+              organization information.
+            </p>
+
+          </div>
+
+        </div>
 
       </section>
 
-    </div>
+      <!-- Footer -->
 
-    <!-- Employee Resources -->
+      <footer class="footer">
 
-    <section
-      class="resources"
-      id="resources"
-      aria-labelledby="resTitle"
-    >
+        <span>
+          <strong>TOWSON HOSPITAL</strong>
+          · Employee Intranet Prototype
+        </span>
 
-      <div class="section-heading">
+        <span>
+          HealthDesk AI graduate capstone
+          · No real hospital systems connected
+        </span>
 
-        <h2 id="resTitle">Employee Resources</h2>
+      </footer>
 
-        <p>Sample intranet content</p>
-
-      </div>
-
-      <div class="resource-row">
-
-        <div class="resource">
-
-          <strong>📘 Clinical Resources</strong>
-
-          <span>
-            Fictional reference materials
-            and training information.
-          </span>
-
-        </div>
-
-        <div class="resource">
-
-          <strong>🛡️ Security &amp; Privacy</strong>
-
-          <span>
-            Safe account practices and
-            information protection reminders.
-          </span>
-
-        </div>
-
-        <div class="resource">
-
-          <strong>📅 Staff Updates</strong>
-
-          <span>
-            Sample announcements and
-            organizational resources.
-          </span>
-
-        </div>
-
-      </div>
-
-    </section>
-
-  </main>
-
-  <!-- Footer -->
-
-  <footer>
-
-    <div class="container footer-inner">
-
-      <span>
-        <strong>TOWSON HOSPITAL</strong>
-        · Employee Intranet Prototype
-      </span>
-
-      <span>
-        Created for the HealthDesk AI academic case study
-        · No real hospital services connected
-      </span>
-
-    </div>
-
-  </footer>
-
-  <!--
-    HealthDesk AI temporary chatbot preview.
-
-    The floating chatbot button has been removed.
-
-    This panel only opens when the employee clicks
-    "Open HealthDesk AI" in the IT Support section.
-  -->
-
-  <aside
-    class="chat-panel"
-    id="chatPanel"
-    hidden
-    aria-label="HealthDesk AI preview"
-  >
-
-    <div class="chat-title">
-
-      <strong>✦ HealthDesk AI</strong>
-
-      <button
-        type="button"
-        id="closeChat"
-        aria-label="Close chatbot"
-      >
-        ×
-      </button>
-
-    </div>
-
-    <div class="chat-body">
-
-      <p>
-        <strong>Hello! 👋</strong>
-        I'm HealthDesk AI, your virtual IT support assistant.
-      </p>
-
-      <div class="chat-note">
-
-        Please do not share passwords, patient information,
-        or confidential details.
-
-        This is a website preview.
-        The Botpress chatbot is not connected yet.
-
-      </div>
-
-      <div class="chat-choices">
-
-        <button type="button" data-topic="Password or Account Issue">
-          Password or Account Issue
-        </button>
-
-        <button type="button" data-topic="TowsonChart Issue">
-          TowsonChart Issue
-        </button>
-
-        <button type="button" data-topic="MFA Issue">
-          Microsoft Authenticator / MFA
-        </button>
-
-        <button type="button" data-topic="IT Support">
-          Other IT Support
-        </button>
-
-      </div>
-
-      <p
-        id="chatFeedback"
-        aria-live="polite"
-        style="margin-top:15px;color:#555;"
-      ></p>
-
-    </div>
-
-  </aside>
+    </main>
+  </div>
 
   <!-- JavaScript -->
 
   <script>
 
-    const chatPanel = document.getElementById("chatPanel");
+    // Open actual Botpress Webchat from homepage buttons
 
-    const openChatButton = document.getElementById("openChat");
+    document.querySelectorAll(
+      '[data-open-botpress]'
+    ).forEach(function(button) {
 
-    const closeChatButton = document.getElementById("closeChat");
+      button.addEventListener('click', function() {
 
-    function toggleChat(open) {
+        if (
+          window.botpress &&
+          typeof window.botpress.open === 'function'
+        ) {
 
-      chatPanel.hidden = !open;
+          window.botpress.open();
 
-      openChatButton.setAttribute(
-        "aria-expanded",
-        String(open)
-      );
-
-      if (open) {
-        closeChatButton.focus();
-      } else {
-        openChatButton.focus();
-      }
-
-    }
-
-    // Open chatbot from IT Support section
-
-    openChatButton.addEventListener("click", function () {
-      toggleChat(true);
-    });
-
-    // Close chatbot
-
-    closeChatButton.addEventListener("click", function () {
-      toggleChat(false);
-    });
-
-    // Temporary chatbot topic choices
-
-    document.querySelectorAll("[data-topic]").forEach(function (button) {
-
-      button.addEventListener("click", function () {
-
-        document.getElementById("chatFeedback").textContent =
-          "Selected: " + button.dataset.topic +
-          ". This is a preview. Your Botpress workflow " +
-          "will handle this option after integration.";
-
-      });
-
-    });
-
-    // Search placeholder
-
-    document.getElementById("siteSearch")
-      .addEventListener("submit", function (event) {
-
-        event.preventDefault();
-
-        const query = document
-          .getElementById("searchInput")
-          .value.trim();
-
-        if (query) {
+        } else {
 
           alert(
-            "Search is a placeholder in this academic prototype. " +
-            "Try the Quick Links or IT Support sections."
+            'HealthDesk AI is still loading. ' +
+            'Please wait a moment and try again.'
           );
 
         }
 
       });
 
-    /*
-      FUTURE BOTPRESS INTEGRATION
+    });
 
-      Once your HealthDesk AI chatbot is ready in Botpress:
+    // Search placeholder for academic demonstration
 
-      1. Publish your chatbot.
-      2. Open the Botpress Webchat integration.
-      3. Copy the official embed code.
-      4. Add the embed code to this website.
-      5. Replace this temporary chatbot preview.
+    document.getElementById('siteSearch')
+      .addEventListener('submit', function(event) {
 
-      Keep the website's "Open HealthDesk AI" button
-      and connect it to your actual Botpress chatbot.
+        event.preventDefault();
 
-      You can also configure Botpress Webchat to match
-      the black, white, and Towson Gold color scheme.
-    */
+        alert(
+          'Intranet search is a placeholder in this ' +
+          'academic prototype. Use the dashboard links ' +
+          'or HealthDesk AI.'
+        );
+
+      });
 
   </script>
 
